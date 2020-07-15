@@ -26,7 +26,16 @@ driver.find_element_by_id('su').click() #点击搜索按钮
 
 time.sleep(5)   #等待五秒
 driver.maximize_window()    #窗口最大化
-driver.get('http://www.taobao.com')
+
+
+# 打开新窗bai口
+newwindow = 'window.open(\'http://www.taobao.com\');'
+driver.execute_script(newwindow)
+
+# 切换du到新的窗口
+handles = driver.window_handles
+driver.switch_to_window(handles[-1])
+# driver.get('http://www.taobao.com')
 
 time.sleep(5)
 driver.set_window_size(480,800)

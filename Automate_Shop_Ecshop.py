@@ -6,6 +6,7 @@ from selenium import webdriver
 import time
 from selenium.webdriver.common.by import By as by
 from selenium.webdriver.support.select import Select as select
+import get_name_email as gne
 
 #实例化浏览器对象
 driver = webdriver.Chrome()
@@ -13,8 +14,9 @@ driver.maximize_window()
 time.sleep(3)
 
 #参数
-username = 'chenkangkang'
-emai = '411052590@qq.com'
+username = gne.getUsername() #自动生成用户名和email
+email = gne.getEmail()
+
 pwd = 'chenkang123'
 cpwd = 'chenkang123'
 msn = '123456@hotmail.com'
@@ -33,7 +35,6 @@ district = '锦江区'
 shname = '陈康'
 address = '东方广场C座'
 
-
 url = 'http://localhost/upload/user.php?act=register'
 #进入注册页面
 driver.get(url = url)
@@ -41,7 +42,7 @@ time.sleep(2)
 
 #开始注册
 driver.find_element(by.ID, 'username').send_keys(username)  #用户名
-driver.find_element(by.ID, 'email').send_keys(emai) #email
+driver.find_element(by.ID, 'email').send_keys(email) #email
 driver.find_element(by.ID, 'password1').send_keys(pwd)  #密码
 driver.find_element(by.ID, 'conform_password').send_keys(cpwd)  #确认密码
 driver.find_element(by.NAME, 'extend_field1').send_keys(msn)   #MSN
@@ -117,6 +118,16 @@ time.sleep(3)
 
 #结算/html/body/div[7]/div/table/tbody/tr[3]/td/div/input
 driver.find_element(by.XPATH, '/html/body/div[7]/div/table/tbody/tr[3]/td/div/input').click()   #点击【立即使用支付宝支付】
+time.sleep(2)
+
+#切换窗口
+handles = driver.window_handles
+driver.switch_to.window(handles[0])
+time.sleep(2)
+
+#退出系统
+driver.find_element(by.XPATH, '//font[@id="ECS_MEMBERZONE"]/a[2]').click()  #点击退出按钮
+time.sleep(5)
 
 #关闭页面并退出驱动
 time.sleep(3)

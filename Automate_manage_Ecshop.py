@@ -110,9 +110,52 @@ driver.find_element(by.XPATH, '//div[@id="listDiv"]/table/tbody/tr[3]/td[10]/a[5
 #接受accept或取消dismiss，text：返回alert/confirm/prompt中的文字信息
 #send_keys(keysToSend)：发送文本至警告框。 keysToSend：将文本发送至警告框。
 time.sleep(5)
-driver.switch_to.alert.accept()
+driver.switch_to.alert.dismiss()
 time.sleep(5)
+# //*[@id="listDiv"]/table/tbody/tr[14]/td[1]/input
+# //*[@id="listDiv"]/table/tbody/tr[13]/td[1]/input
 
+#退回上一层frame
+driver.switch_to.parent_frame()
+#切换menu-frame
+driver.switch_to.frame('menu-frame')
+time.sleep(3)
+
+#添加商品
+driver.find_element(by.XPATH, '//ul[@id="menu-ul"]/li[1]').click() #点击商品管理
+time.sleep(1)
+driver.find_element(by.XPATH, '//ul[@id="menu-ul"]/li[1]/ul/li[2]/a').click()      #点击添加新商品
+time.sleep(3)
+
+#退回上一层frame
+driver.switch_to.parent_frame()
+#切换main-frame
+driver.switch_to.frame('main-frame')
+time.sleep(3)
+
+#设置商品信息
+goods_name = driver.find_element(by.NAME, 'goods_name') #定位元素
+goods_name.clear()  #清理
+goods_name.send_keys('大码女装')
+#时间控制
+l_date = driver.find_element(by.ID, 'promote_start_date') #定位元素
+#通过js移除标签的属性
+js = "document.getElementById('promote_start_date').removeAttribute('readonly')"
+driver.execute_script(js)
+l_date.clear()
+time.sleep(1)
+dete = '2020-07-17'
+l_date.send_keys(dete)
+time.sleep(3)
+
+#切换frame
+driver.switch_to.default_content()  #退回到最外层
+driver.switch_to.frame('header-frame')
+time.sleep(2)
+
+#退出系统 header-frame
+driver.find_element(by.XPATH, '//div[@id="submenu-div"]/ul/li[1]/a').click()
+time.sleep(2)
 
 #关闭页面并退出驱动
 time.sleep(3)
